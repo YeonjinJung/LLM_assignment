@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Training Planner Pro [v3.2]</title>
+    <title>Professional Training Planner Pro [v3.5]</title>
     <style>
         :root {
             --primary: #2c3e50;
             --accent: #e74c3c;
             --success: #27ae60;
             --warmup: #f39c12;
-            --amrap: #8e44ad;
-            /* 보라색으로 AMRAP 구분 강화 */
+            --amrap: #8e44ad; 
             --bg: #f8f9fa;
         }
-
         body {
             font-family: 'Pretendard', -apple-system, system-ui, sans-serif;
             background-color: var(--bg);
@@ -23,50 +20,31 @@
             padding: 20px;
             color: #333;
         }
-
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
+        .container { max-width: 1300px; margin: 0 auto; }
+        
         header {
             background: var(--primary);
             color: white;
             padding: 30px;
             border-radius: 12px 12px 0 0;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-
-        h1 {
-            margin: 0;
-            font-size: 2.2em;
-            font-weight: 800;
-        }
-
-        header p {
-            margin-top: 8px;
-            opacity: 0.8;
-            font-size: 1.1em;
-        }
+        h1 { margin: 0; font-size: 2.2em; font-weight: 800; }
+        header p { margin-top: 8px; opacity: 0.8; font-size: 1.1em; }
 
         .section {
             background: white;
             padding: 30px;
             margin-bottom: 25px;
             border-radius: 0 0 12px 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
+        
+        .rounded-section { border-radius: 12px !important; margin-top: 25px; }
+        
+        h2 { border-left: 6px solid var(--primary); padding-left: 18px; font-size: 1.5em; color: var(--primary); margin-top: 0; }
 
-        h2 {
-            border-left: 6px solid var(--primary);
-            padding-left: 18px;
-            font-size: 1.5em;
-            color: var(--primary);
-            margin-top: 0;
-        }
-
-        /* Input Form */
         .input-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -76,75 +54,21 @@
             border-radius: 10px;
             margin-bottom: 25px;
         }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .input-group { display: flex; flex-direction: column; gap: 10px; }
+        label { font-weight: bold; font-size: 0.95em; color: #555; }
+        input { padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1em; }
+        button.main-btn { 
+            background: var(--primary); color: white; border: none; padding: 14px; 
+            border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1.1em; transition: 0.3s;
         }
+        button.main-btn:hover { background: #34495e; transform: translateY(-3px); }
 
-        label {
-            font-weight: bold;
-            font-size: 0.95em;
-            color: #555;
-        }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; table-layout: fixed; }
+        th, td { border: 1px solid #dee2e6; padding: 14px 8px; text-align: center; font-size: 0.9em; }
+        th { color: var(--primary); font-weight: 800; }
+        .head-row-1 th { background: #f1f4f7; }
+        .head-row-2 th { background: white; border-bottom: 2px solid #ddd; }
 
-        input {
-            padding: 14px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 1em;
-        }
-
-        button.main-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1.1em;
-            transition: 0.3s;
-        }
-
-        button.main-btn:hover {
-            background: #34495e;
-            transform: translateY(-3px);
-        }
-
-        /* Table Advanced Styling */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-            table-layout: fixed;
-        }
-
-        th,
-        td {
-            border: 1px solid #dee2e6;
-            padding: 14px 8px;
-            text-align: center;
-            font-size: 0.9em;
-        }
-
-        th {
-            color: var(--primary);
-            font-weight: 800;
-        }
-
-        .head-row-1 th {
-            background: #f1f4f7;
-        }
-
-        .head-row-2 th {
-            background: white;
-            border-bottom: 2px solid #ddd;
-        }
-
-        /* % 표시 스타일 */
         .pct-badge {
             font-size: 0.75em;
             color: #7f8c8d;
@@ -154,47 +78,33 @@
             margin-left: 3px;
         }
 
-        /* 셀 종류별 색상 */
-        .week-header {
-            background: #eef2f7;
-            font-weight: bold;
-            width: 65px;
-            border-right: 2px solid #dee2e6;
-        }
+        .week-header { background: #eef2f7; font-weight: bold; width: 65px; border-right: 2px solid #dee2e6; }
+        .warmup-cell { color: var(--warmup); font-weight: 600; background-color: #fff9e6; }
+        .main-cell { color: var(--success); font-weight: bold; font-size: 1.2em; background-color: #e8f8f5; }
+        .amrap-cell { background-color: #f5f0f9; color: var(--amrap); font-weight: bold; border-left: 1px solid #e0d0eb; }
+        
+        .ex-link { color: var(--accent); text-decoration: none; font-weight: 800; }
+        .ex-link:hover { text-decoration: underline; }
 
-        .warmup-cell {
-            color: var(--warmup);
-            font-weight: 600;
-            background-color: #fff9e6;
+        .accessory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
-
-        .main-cell {
-            color: var(--success);
-            font-weight: bold;
-            font-size: 1.2em;
-            background-color: #e8f8f5;
+        .accessory-card {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
         }
+        .accessory-card h4 { margin-top: 0; color: var(--primary); border-bottom: 2px solid #f1f4f7; padding-bottom: 10px; }
+        .accessory-list { list-style: none; padding: 0; margin: 0; }
+        .accessory-list li { padding: 10px 0; border-bottom: 1px solid #fafafa; display: flex; justify-content: space-between; align-items: center; }
+        .accessory-list li:last-child { border-bottom: none; }
+        .accessory-list span { font-size: 0.9em; color: #666; font-weight: 500; }
 
-        .amrap-cell {
-            background-color: #f5f0f9;
-            color: var(--amrap);
-            font-weight: bold;
-            border-left: 1px solid #e0d0eb;
-        }
-
-        .ex-link {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 1.3em;
-        }
-
-        .ex-link:hover {
-            color: var(--accent);
-            border-bottom: 2px solid var(--accent);
-        }
-
-        /* Footer & Note */
         .footer-info {
             display: flex;
             justify-content: space-between;
@@ -204,158 +114,94 @@
             padding: 10px;
             border-radius: 6px;
         }
-
-        .note-text {
-            font-size: 0.85em;
-            color: #95a5a6;
-            font-style: italic;
-        }
-
-        /* 보조운동 섹션 */
-        .accessory-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .accessory-card {
-            border: 1px solid #eee;
-            padding: 20px;
-            border-radius: 10px;
-            background: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-        }
-
-        .accessory-card h4 {
-            margin-top: 0;
-            color: var(--primary);
-            border-bottom: 2px solid #f1f4f7;
-            padding-bottom: 10px;
-        }
-
-        .accessory-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .accessory-list li {
-            padding: 8px 0;
-            border-bottom: 1px solid #fafafa;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .footer-note {
-            font-size: 0.85em;
-            color: #7f8c8d;
-            margin-top: 15px;
-            font-style: italic;
-        }
+        .note-text { font-size: 0.85em; color: #95a5a6; font-style: italic; }
+        .footer-note { font-size: 0.85em; color: #7f8c8d; margin-top: 15px; font-style: italic; }
     </style>
 </head>
-
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Smart Workout System Pro [v3.2]</h1>
-            <p>고객 훈련 최적화 솔루션</p>
-        </header>
+<div class="container">
+    <header>
+        <h1>Smart Workout System Pro [v3.5]</h1>
+        <p>고객 훈련 최적화 솔루션</p>
+    </header>
 
-        <div class="section">
-            <h2>1. 메인 훈련 스케줄 생성</h2>
-            <div class="input-grid">
-                <div class="input-group">
-                    <label>훈련 종목 이름</label>
-                    <input type="text" id="exName" placeholder="예: 스쿼트">
-                </div>
-                <div class="input-group">
-                    <label>현재 1RM (kg)</label>
-                    <input type="number" id="ex1RM" placeholder="숫자만 입력 (예: 140)">
-                </div>
-                <button class="main-btn" onclick="addMainExercise()">상세 훈련표 자동 생성</button>
+    <div class="section">
+        <h2>1. 메인 훈련 스케줄 생성</h2>
+        <div class="input-grid">
+            <div class="input-group">
+                <label>훈련 종목 이름</label>
+                <input type="text" id="exName" placeholder="예: 스쿼트">
             </div>
-
-            <div id="mainWorkoutContainer">
-                <!-- 훈련표가 여기에 생성됩니다 -->
+            <div class="input-group">
+                <label>현재 1RM (kg)</label>
+                <input type="number" id="ex1RM" placeholder="숫자만 입력 (예: 140)">
             </div>
+            <button class="main-btn" onclick="addMainExercise()">상세 훈련표 자동 생성</button>
         </div>
-
-        <div class="section">
-            <h2>2. 고정 보조운동 라이브러리</h2>
-            <div class="accessory-grid">
-                <div class="accessory-card">
-                    <h4>Upper Body (상체)</h4>
-                    <ul class="accessory-list">
-                        <li><a href="https://www.youtube.com/results?search_query=풀업+자세" target="_blank"
-                                class="ex-link">Pull Up</a> <span>3set x Max</span></li>
-                        <li><a href="https://www.youtube.com/results?search_query=딥스+자세" target="_blank"
-                                class="ex-link">Dips</a> <span>3set x 12</span></li>
-                        <li><a href="https://www.youtube.com/results?search_query=바벨로우+자세" target="_blank"
-                                class="ex-link">Barbell Row</a> <span>4set x 10</span></li>
-                    </ul>
-                </div>
-                <div class="accessory-card">
-                    <h4>Lower Body (하체)</h4>
-                    <ul class="accessory-list">
-                        <li><a href="https://www.youtube.com/results?search_query=레그프레스+자세" target="_blank"
-                                class="ex-link">Leg Press</a> <span>4set x 12</span></li>
-                        <li><a href="https://www.youtube.com/results?search_query=레그컬+자세" target="_blank"
-                                class="ex-link">Leg Curl</a> <span>3set x 15</span></li>
-                        <li><a href="https://www.youtube.com/results?search_query=런지+자세" target="_blank"
-                                class="ex-link">Lunge</a> <span>3set x 20</span></li>
-                    </ul>
-                </div>
-                <div class="accessory-card">
-                    <h4>Core & Conditioning (코어)</h4>
-                    <ul class="accessory-list">
-                        <li><a href="https://www.youtube.com/results?search_query=플랭크+자세" target="_blank"
-                                class="ex-link">Plank</a> <span>3set x 1min</span></li>
-                        <li><a href="https://www.youtube.com/results?search_query=행잉레그레이즈+자세" target="_blank"
-                                class="ex-link">Hanging Leg Raise</a> <span>3set x 15</span></li>
-                    </ul>
-                </div>
-            </div>
-            <p class="footer-note">* 운동 이름을 클릭하면 유튜브 자세 가이드로 연결됩니다.</p>
-        </div>
-    </div>
+        
+        <div id="mainWorkoutContainer"></div>
     </div>
 
+    <div class="section rounded-section">
+        <h2>2. 고정 보조운동 라이브러리</h2>
+        <div class="accessory-grid">
+            <div class="accessory-card">
+                <h4>Upper Body (상체)</h4>
+                <ul class="accessory-list">
+                    <li><a href="https://www.youtube.com/results?search_query=풀업+자세" target="_blank" class="ex-link">Pull Up</a> <span>3set x Max</span></li>
+                    <li><a href="https://www.youtube.com/results?search_query=딥스+자세" target="_blank" class="ex-link">Dips</a> <span>3set x 12</span></li>
+                    <li><a href="https://www.youtube.com/results?search_query=바벨로우+자세" target="_blank" class="ex-link">Barbell Row</a> <span>4set x 10</span></li>
+                </ul>
+            </div>
+            <div class="accessory-card">
+                <h4>Lower Body (하체)</h4>
+                <ul class="accessory-list">
+                    <li><a href="https://www.youtube.com/results?search_query=레그프레스+자세" target="_blank" class="ex-link">Leg Press</a> <span>4set x 12</span></li>
+                    <li><a href="https://www.youtube.com/results?search_query=레그컬+자세" target="_blank" class="ex-link">Leg Curl</a> <span>3set x 15</span></li>
+                    <li><a href="https://www.youtube.com/results?search_query=런지+자세" target="_blank" class="ex-link">Lunge</a> <span>3set x 20</span></li>
+                </ul>
+            </div>
+            <div class="accessory-card">
+                <h4>Core & Conditioning</h4>
+                <ul class="accessory-list">
+                    <li><a href="https://www.youtube.com/results?search_query=플랭크+자세" target="_blank" class="ex-link">Plank</a> <span>3set x 1min</span></li>
+                    <li><a href="https://www.youtube.com/results?search_query=행잉레그레이즈+자세" target="_blank" class="ex-link">Hanging Leg Raise</a> <span>3set x 15</span></li>
+                </ul>
+            </div>
+        </div>
+        <p class="footer-note">* 운동 이름을 클릭하면 유튜브 자세 가이드로 연결됩니다.</p>
+    </div>
+</div>
 
-    <script>
-        /**
-         * 2.5kg 단위 반내림 (Floor to nearest 2.5)
-         */
-        function roundTo2_5(weight) {
-            return Math.floor(weight / 2.5) * 2.5;
+<script>
+    function roundTo2_5(weight) {
+        return Math.floor(weight / 2.5) * 2.5;
+    }
+
+    function addMainExercise() {
+        const name = document.getElementById('exName').value;
+        const oneRM = document.getElementById('ex1RM').value;
+
+        if (!name || !oneRM) {
+            alert('운동 명칭과 1RM 중량을 정확히 입력해주세요.');
+            return;
         }
 
-        function addMainExercise() {
-            const name = document.getElementById('exName').value;
-            const oneRM = document.getElementById('ex1RM').value;
+        const tm = parseFloat(oneRM) * 0.9;
+        const container = document.getElementById('mainWorkoutContainer');
 
-            if (!name || !oneRM) {
-                alert('운동 명칭과 1RM 중량을 정확히 입력해주세요.');
-                return;
-            }
+        const weeks = [
+            { week: "1주", w: [0.4, 0.5, 0.6], m: [0.65, 0.75, 0.85], a: [0.95, 1.05, 1.10] },
+            { week: "2주", w: [0.4, 0.5, 0.6], m: [0.70, 0.80, 0.90], a: [1.00, 1.05, 1.15] },
+            { week: "3주", w: [0.4, 0.5, 0.6], m: [0.75, 0.85, 0.95], a: [1.05, 1.15, 1.20] },
+            { week: "4주", w: [0.4, 0.5, 0.6], m: [null, null, null], a: [null, null, null] }
+        ];
 
-            const tm = parseFloat(oneRM) * 0.9; // Training Max 90%
-            const container = document.getElementById('mainWorkoutContainer');
-
-            // 주차별 정교한 강도 설정 데이터 (엑셀 완벽 이식)
-            // w: 워밍업, m: 메인(Set1, 2, 3), a: AMRAP(Set1, 2, 3)
-            const weeks = [
-                { week: "1주", w: [0.4, 0.5, 0.6], m: [0.65, 0.75, 0.85], a: [0.95, 1.05, 1.10] },
-                { week: "2주", w: [0.4, 0.5, 0.6], m: [0.70, 0.80, 0.90], a: [1.00, 1.05, 1.15] },
-                { week: "3주", w: [0.4, 0.5, 0.6], m: [0.75, 0.85, 0.95], a: [1.05, 1.15, 1.20] },
-                { week: "4주", w: [0.4, 0.5, 0.6], m: [0, 0, 0], a: [0, 0, 0] } // 디로딩
-            ];
-
-            let html = `
+        let html = `
             <div style="margin-top:30px; border:2px solid #eef2f7; padding:25px; border-radius:12px; background:#fff; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding-bottom:10px; border-bottom:2px solid #f1f4f7;">
-                    <h3 style="margin:0;"><a href="https://www.youtube.com/results?search_query=${name}+자세" target="_blank" class="ex-link">${name}</a></h3>
+                    <h3 style="margin:0;"><a href="https://www.youtube.com/results?search_query=${name}+자세" target="_blank" class="ex-link" style="font-size:1.3em;">${name}</a></h3>
                     <div style="text-align:right;">
                         <span style="font-size:0.9em; color:#7f8c8d;">1RM: <b>${oneRM}kg</b> | </span>
                         <span style="font-size:1.1em; color:var(--success); font-weight:bold;">Training Max: <b>${tm.toFixed(1)}kg</b></span>
@@ -366,45 +212,42 @@
                         <tr class="head-row-1">
                             <th rowspan="2" style="width:65px; border-right: 2px solid #dee2e6;">주차</th>
                             <th colspan="3" style="color:#d68910;">Warming Up (Sets 1-3)</th>
-                            <th colspan="3" style="color:#16a085; background:#e8f8f5;">Main Work (Sets 1-3) </th>
-                            <th colspan="3" style="color:#8e44ad; background:#f5f0f9; border-left: 2px solid #e0d0eb;">Jocker Sets (Extra Work) </th>
+                            <th colspan="3" style="color:#16a085; background:#e8f8f5;">Main Work (Sets 1-3)</th>
+                            <th colspan="3" style="color:#8e44ad; background:#f5f0f9; border-left: 2px solid #e0d0eb;">Jocker Sets (Extra Work)</th>
                         </tr>
                         <tr class="head-row-2">
                             <th>40%</th><th>50%</th><th>60%</th>
-                            <!-- % 값을 자바스크립트로 주차별 동적 표시 -->
-                            <th id="mH1_${name}">1st Set</th>
-                            <th id="mH2_${name}">2nd Set</th>
-                            <th id="mH3_${name}">3rd Set</th>
-                            <th style="background:#f5f0f9;" id="aH1_${name}">1st Set</th>
-                            <th style="background:#f5f0f9;" id="aH2_${name}">2nd Set</th>
-                            <th style="background:#f5f0f9;" id="aH3_${name}">3rd Set</th>
+                            <th>1st Set</th><th>2nd Set</th><th>3rd Set</th>
+                            <th>1st Set</th>
+                            <th>2nd Set</th>
+                            <th>3rd Set</th>
                         </tr>
                     </thead>
                     <tbody>
         `;
 
-            weeks.forEach((w, index) => {
-                html += `
+        weeks.forEach((w) => {
+            const isDeloading = w.week === "4주";
+            
+            html += `
                 <tr>
                     <td class="week-header">${w.week}</td>
                     <td class="warmup-cell">${roundTo2_5(tm * w.w[0])}</td>
                     <td class="warmup-cell">${roundTo2_5(tm * w.w[1])}</td>
                     <td class="warmup-cell">${roundTo2_5(tm * w.w[2])}</td>
                     
-                    <!-- Main Work % 실시간 표시는 td에 직접 달기 -->
-                    <td class="main-cell">${roundTo2_5(tm * w.m[0])} <span class="pct-badge">${Math.round(w.m[0] * 100)}%</span></td>
-                    <td class="main-cell">${roundTo2_5(tm * w.m[1])} <span class="pct-badge">${Math.round(w.m[1] * 100)}%</span></td>
-                    <td class="main-cell">${roundTo2_5(tm * w.m[2])} <span class="pct-badge">${Math.round(w.m[2] * 100)}%</span></td>
+                    <td class="main-cell">${isDeloading ? "-" : roundTo2_5(tm * w.m[0]) + ' <span class="pct-badge">' + Math.round(w.m[0]*100) + '%</span>'}</td>
+                    <td class="main-cell">${isDeloading ? "-" : roundTo2_5(tm * w.m[1]) + ' <span class="pct-badge">' + Math.round(w.m[1]*100) + '%</span>'}</td>
+                    <td class="main-cell">${isDeloading ? "-" : roundTo2_5(tm * w.m[2]) + ' <span class="pct-badge">' + Math.round(w.m[2]*100) + '%</span>'}</td>
                     
-                    <!-- AMRAP 3열 완벽 구현 -->
-                    <td class="amrap-cell">${roundTo2_5(tm * w.a[0])} <span class="pct-badge">${Math.round(w.a[0] * 100)}%</span></td>
-                    <td class="amrap-cell">${roundTo2_5(tm * w.a[1])} <span class="pct-badge">${Math.round(w.a[1] * 100)}%</span></td>
-                    <td class="amrap-cell">${roundTo2_5(tm * w.a[2])} <span class="pct-badge">${Math.round(w.a[2] * 100)}%</span></td>
+                    <td class="amrap-cell">${isDeloading ? "-" : roundTo2_5(tm * w.a[0]) + ' <span class="pct-badge">' + Math.round(w.a[0]*100) + '%</span>'}</td>
+                    <td class="amrap-cell">${isDeloading ? "-" : roundTo2_5(tm * w.a[1]) + ' <span class="pct-badge">' + Math.round(w.a[1]*100) + '%</span>'}</td>
+                    <td class="amrap-cell">${isDeloading ? "-" : roundTo2_5(tm * w.a[2]) + ' <span class="pct-badge">' + Math.round(w.a[2]*100) + '%</span>'}</td>
                 </tr>
             `;
-            });
+        });
 
-            html += `
+        html += `
                     </tbody>
                 </table>
                 <div class="footer-info">
@@ -414,14 +257,11 @@
             </div>
         `;
 
-            container.insertAdjacentHTML('beforeend', html);
-
-            // Form Clear
-            document.getElementById('exName').value = '';
-            document.getElementById('ex1RM').value = '';
-        }
-    </script>
+        container.insertAdjacentHTML('beforeend', html);
+        document.getElementById('exName').value = '';
+        document.getElementById('ex1RM').value = '';
+    }
+</script>
 
 </body>
-
 </html>
